@@ -1,0 +1,5 @@
+@import "tailwindcss";
+/* Estilos personalizados da aplicação */
+body {
+  font-family: "Figtree", sans-serif;
+}
