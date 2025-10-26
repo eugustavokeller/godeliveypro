@@ -6,15 +6,18 @@ Este projeto foi configurado para rodar em Docker com as seguintes característi
 
 ### ✅ O que foi configurado:
 
-1. **Docker Compose** - Arquitetura simplificada com apenas 2 containers:
+1. **Docker Compose** - Arquitetura completa com 3 containers:
 
    - `app` - Aplicação Laravel com PHP-FPM 8.2
    - `nginx` - Servidor web com SSL
+   - `db` - MySQL 8.0
 
-2. **Banco de Dados Externo** - Configurado para usar banco de dados externo ao Docker
+2. **Banco de Dados** - MySQL 8.0 incluído no Docker
 
-   - Não inclui container MySQL
-   - Conecta via variáveis de ambiente no `.env`
+   - Volume persistente para dados
+   - Porta 3307 exposta externamente (3306 interno)
+   - Configuração via variáveis de ambiente no `.env`
+   - Pode ser substituído por banco externo alterando `DB_HOST`
 
 3. **Assets Compilados** - Build automatizado no Dockerfile:
 
@@ -30,17 +33,19 @@ Este projeto foi configurado para rodar em Docker com as seguintes característi
 ### Desenvolvimento Local
 
 ```bash
-# 1. Configure o banco de dados no .env
+# 1. Configure o banco de dados no .env (opcional - já tem valores padrão)
 cp docker.env.example .env
-nano .env
 
-# 2. Suba os containers
+# 2. Suba os containers (incluindo MySQL)
 docker-compose up -d
 
-# 3. Execute migrations
+# 3. Aguarde o MySQL inicializar (10-20 segundos)
+docker-compose logs -f db
+
+# 4. Execute migrations
 docker-compose exec app php artisan migrate
 
-# 4. Gere a chave da aplicação
+# 5. Gere a chave da aplicação
 docker-compose exec app php artisan key:generate
 ```
 
@@ -109,12 +114,42 @@ docker-compose build --no-cache   # Build sem cache
 
 ## 🔐 Configuração do Banco de Dados
 
+### Usando MySQL do Docker (Padrão)
+
+O Docker inclui MySQL 8.0 configurado automaticamente. As credenciais padrão são:
+
+- Host: `db`
+- Database: `catchme`
+- User: `catchme_user`
+- Password: `catchme_password`
+
+### Usando Banco Externo
+
+Para usar um banco externo, edite o `.env`:
+
+```env
+DB_HOST=seu-servidor-mysql.com
+DB_DATABASE=seu_banco
+DB_USERNAME=seu_usuario
+DB_PASSWORD=sua_senha
+```
+
 Veja o arquivo `CONFIGURACAO_BANCO_EXTERNO.md` para:
 
 - Como configurar diferentes provedores de banco (AWS RDS, DigitalOcean, etc.)
 - Troubleshooting de conexão
 - Configuração de SSL
 - Migração de dados
+
+### Acessar MySQL
+
+```bash
+# Do host (porta 3307)
+mysql -h 127.0.0.1 -P 3307 -u catchme_user -p
+
+# Do container
+docker-compose exec db mysql -u catchme_user -p catchme
+```
 
 ## 📝 Variáveis de Ambiente
 
@@ -126,16 +161,21 @@ APP_ENV=production
 APP_DEBUG=false
 APP_URL=https://seu-dominio.com
 
-# Banco de Dados Externo
-DB_HOST=seu-servidor-mysql.com
+# Banco de Dados (MySQL no Docker)
+DB_HOST=db
 DB_PORT=3306
-DB_DATABASE=nome_do_banco
-DB_USERNAME=usuario
-DB_PASSWORD=senha
+DB_DATABASE=catchme
+DB_USERNAME=catchme_user
+DB_PASSWORD=catchme_password
+DB_ROOT_PASSWORD=root_password
 
-# Nginx
+# Para usar banco EXTERNO, altere DB_HOST:
+# DB_HOST=seu-servidor-mysql.com
+
+# Nginx e MySQL
 NGINX_HTTP_PORT=80
 NGINX_HTTPS_PORT=443
+DB_EXTERNAL_PORT=3307  # Porta externa do MySQL
 ```
 
 ## 🆘 Troubleshooting
@@ -195,7 +235,7 @@ docker-compose exec app chown -R www-data:www-data storage bootstrap/cache
 **Build: ✅ Funcionando**  
 **Containers: ✅ Rodando**  
 **SSL: ✅ Configurado**  
-**Banco: ✅ Externo**
+**MySQL: ✅ Docker (porta 3307)**
 
 ## 📚 Documentação Adicional
 
