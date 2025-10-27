@@ -29,7 +29,10 @@ chmod +x node_modules/.bin/vite || true
 echo "🔧 Copiar variável de ambiente .env"
 cp ../.env.example .env
 
-echo "🔧 Gerar chave da aplicação"
+echo "🔧 Cacheando configurações do Laravel..."
+php artisan config:cache
+
+echo "🔧 Gerando chave da aplicação..."
 php artisan key:generate
 
 echo "⚡ Buildando frontend (Vite)..."
