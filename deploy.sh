@@ -14,7 +14,8 @@ echo "📦 Instalando dependências do backend..."
 composer install --no-dev --optimize-autoloader
 
 echo "🌐 Instalando dependências do frontend..."
-yarn install
+yarn cache clean --mirror
+yarn install --frozen-lockfile
 
 echo "🔧 Corrigindo permissões do esbuild..."
 chmod -R 755 node_modules/@esbuild || true
@@ -26,29 +27,22 @@ chmod -R 755 node_modules/vite || true
 chmod -R 755 node_modules/@vitejs || true
 chmod +x node_modules/.bin/vite || true
 
-echo "🔧 Copiar variável de ambiente .env"
-cp ../.env.example .env
-
-echo "🔧 Gerar chave da aplicação"
-php artisan key:generate
-
 echo "⚡ Buildando frontend (Vite)..."
-npx vite build
+yarn build
 
 echo "⚙️ Rodando migrações..."
-php artisan migrate --force
+php artisan migrate --force --no-interaction
 
 echo "🧹 Limpando caches do Laravel..."
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
 php artisan config:cache
 php artisan route:cache
-php artisan view:clear
 
 echo "🔑 Ajustando permissões para Nginx/PHP-FPM..."
 # Usuário www-data é padrão do Nginx/PHP-FPM no Ubuntu
-sudo chown -R www-data:www-data $APP_DIR
-sudo find $APP_DIR -type f -exec chmod 644 {} \;
-sudo find $APP_DIR -type d -exec chmod 755 {} \;
-sudo chmod -R 775 $APP_DIR/storage
-sudo chmod -R 775 $APP_DIR/bootstrap/cache
+sudo chown -R www-data:www-data "$APP_DIR"
+sudo chmod -R ug+rwX "$APP_DIR/storage" "$APP_DIR/bootstrap/cache"
 
 echo "✅ Deploy finalizado com sucesso!"
