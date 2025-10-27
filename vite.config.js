@@ -8,11 +8,11 @@ export default defineConfig({
   base: "/",
   plugins: [
     laravel({
-      input: ["resources/js/app.js", "resources/css/app.css"],
+      input: ["resources/js/app.js"],
       refresh: true,
     }),
-    tailwindcss(),
     vue(),
+    tailwindcss(),
   ],
   build: {
     emptyOutDir: true,
