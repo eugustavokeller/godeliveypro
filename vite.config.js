@@ -13,6 +13,11 @@ export default defineConfig({
     tailwindcss(),
     vue(),
   ],
+  build: {
+    outDir: "public/build",
+    manifest: true,
+    emptyOutDir: true,
+  },
   resolve: {
     alias: {
       "@": "/resources/js",
