@@ -61,7 +61,7 @@ cd godeliverypro
 composer install
 
 # Instalar dependências Node.js
-npm install
+yarn install
 ```
 
 ### 2. Configurar Ambiente
