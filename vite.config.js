@@ -16,6 +16,7 @@ export default defineConfig({
   ],
   build: {
     manifest: true, // gera manifest.json
+    outDir: "public/build", // pasta onde os assets vão
     emptyOutDir: true,
   },
   resolve: {
