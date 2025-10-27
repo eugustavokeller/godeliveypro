@@ -61,7 +61,7 @@ cd godeliverypro
 composer install
 
 # Instalar dependências Node.js
-npm install
+yarn install
 ```
 
 ### 2. Configurar Ambiente
@@ -110,7 +110,7 @@ php artisan storage:link
 php artisan serve
 
 # Terminal 2: Compilar assets do frontend
-npm run dev
+yarn dev
 ```
 
 Acesse: **http://localhost:8000**
@@ -147,10 +147,10 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 
 ```bash
 # Instalar dependências
-docker-compose exec app npm install
+docker-compose exec app yarn install
 
 # Compilar para produção
-docker-compose exec app npm run build
+docker-compose exec app yarn build
 ```
 
 ## 🌐 Deploy em Produção
@@ -168,7 +168,7 @@ cd /var/www/godeliverypro
 
 # Instalar dependências
 composer install --no-dev --optimize-autoloader
-npm install && npm run build
+yarn install && yarn build
 ```
 
 ### 2. Configurar Nginx
@@ -303,7 +303,7 @@ Implementação de modal de cookies com opções de preferências para o usuári
 ### Compilar Assets para Produção
 
 ```bash
-npm run build
+yarn build
 ```
 
 ### Modo Desenvolvimento
@@ -313,7 +313,7 @@ npm run build
 php artisan serve
 
 # Terminal 2: Frontend Vite
-npm run dev
+yarn dev
 ```
 
 ### Testes
