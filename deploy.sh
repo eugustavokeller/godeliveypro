@@ -1,70 +1,54 @@
 #!/bin/bash
-
-# Script de Deploy para VPS
-# Uso: ./deploy.sh
-
 set -e
 
-echo "🚀 Iniciando deploy do CatchMe..."
+# Diretório do projeto
+APP_DIR="/var/www/godeliverypro"
 
-# Cores para output
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-NC='\033[0m' # No Color
+cd $APP_DIR
 
-# Verificar se existe arquivo .env
-if [ ! -f .env ]; then
-    echo -e "${YELLOW}⚠️  Arquivo .env não encontrado.${NC}"
-    if [ -f docker.env.example ]; then
-        echo -e "${YELLOW}Criando .env a partir do exemplo...${NC}"
-        cp docker.env.example .env
-        echo -e "${GREEN}✓ Arquivo .env criado. Por favor, configure as variáveis de ambiente.${NC}"
-        echo -e "${RED}❌ IMPORTANTE: Configure o banco de dados externo no arquivo .env antes de continuar!${NC}"
-        exit 1
-    else
-        echo -e "${RED}❌ Erro: docker.env.example não encontrado!${NC}"
-        exit 1
-    fi
-fi
+echo "🔄 Atualizando código do Git..."
+git reset --hard
+git pull origin main
 
-# Construir imagens Docker
-echo -e "${YELLOW}📦 Construindo imagens Docker...${NC}"
-docker-compose build --no-cache
+echo "📦 Instalando dependências do backend..."
+composer install --no-dev --optimize-autoloader
 
-# Parar containers existentes
-echo -e "${YELLOW}🛑 Parando containers existentes...${NC}"
-docker-compose down
+echo "🌐 Instalando dependências do frontend..."
+yarn install
 
-# Iniciar containers
-echo -e "${YELLOW}▶️  Iniciando containers...${NC}"
-docker-compose up -d
+echo "🔧 Corrigindo permissões do esbuild..."
+chmod -R 755 node_modules/@esbuild || true
+chmod +x node_modules/@esbuild/linux-x64/bin/esbuild || true
 
-# Aguardar aplicação ficar pronta
-echo -e "${YELLOW}⏳ Aguardando aplicação inicializar...${NC}"
-sleep 5
+echo "🔧 Corrigindo permissões do Vite e ferramentas..."
+chmod -R 755 node_modules/.bin || true
+chmod -R 755 node_modules/vite || true
+chmod -R 755 node_modules/@vitejs || true
+chmod +x node_modules/.bin/vite || true
 
-# Executar migrations
-echo -e "${YELLOW}🗄️  Executando migrations...${NC}"
-docker-compose exec -T app php artisan migrate --force || echo -e "${RED}⚠️  Erro ao executar migrations. Verifique a conexão com o banco de dados.${NC}"
+echo "🔧 Copiar variável de ambiente .env"
+cp ../.env.example .env
 
-# Criar link de storage
-echo -e "${YELLOW}🔗 Criando link de storage...${NC}"
-docker-compose exec -T app php artisan storage:link || true
+echo "🔧 Gerar chave da aplicação"
+php artisan key:generate
 
-# Otimizar aplicação
-echo -e "${YELLOW}⚡ Otimizando aplicação...${NC}"
-docker-compose exec -T app php artisan config:cache || true
-docker-compose exec -T app php artisan route:cache || true
-docker-compose exec -T app php artisan view:cache || true
+echo "⚡ Buildando frontend (Vite)..."
+npx vite build
 
-# Limpar cache
-docker-compose exec -T app php artisan cache:clear || true
+echo "⚙️ Rodando migrações..."
+php artisan migrate --force
 
-echo -e "${GREEN}✓ Deploy concluído com sucesso!${NC}"
-echo -e "${GREEN}🎉 Aplicação disponível em http://seu-dominio.com${NC}"
+echo "🧹 Limpando caches do Laravel..."
+php artisan config:cache
+php artisan route:cache
+php artisan view:clear
 
-# Mostrar logs
-echo ""
-echo "📋 Status dos containers:"
-docker-compose ps
+echo "🔑 Ajustando permissões para Nginx/PHP-FPM..."
+# Usuário www-data é padrão do Nginx/PHP-FPM no Ubuntu
+sudo chown -R www-data:www-data $APP_DIR
+sudo find $APP_DIR -type f -exec chmod 644 {} \;
+sudo find $APP_DIR -type d -exec chmod 755 {} \;
+sudo chmod -R 775 $APP_DIR/storage
+sudo chmod -R 775 $APP_DIR/bootstrap/cache
+
+echo "✅ Deploy finalizado com sucesso!"
