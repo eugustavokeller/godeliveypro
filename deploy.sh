@@ -28,6 +28,7 @@ chmod -R 755 node_modules/@vitejs || true
 chmod +x node_modules/.bin/vite || true
 
 echo "⚡ Buildando frontend (Vite)..."
+rm -rf public/build
 yarn build
 
 echo "⚙️ Rodando migrações..."
