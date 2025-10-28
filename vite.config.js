@@ -15,9 +15,10 @@ export default defineConfig({
     tailwindcss(),
   ],
   build: {
-    manifest: true, // gera manifest.json
+    manifest: "manifest.json", // gera manifest.json na raiz do outDir
     outDir: "public/build", // pasta onde os assets vão
     emptyOutDir: true,
+    copyPublicDir: false,
   },
   resolve: {
     alias: {
