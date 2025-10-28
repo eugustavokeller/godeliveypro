@@ -5,7 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 
 export default defineConfig({
-  base: "/build/",
+  base: "/",
   plugins: [
     laravel({
       input: ["resources/js/app.js", "resources/css/app.css"],
@@ -16,7 +16,7 @@ export default defineConfig({
   ],
   build: {
     manifest: "manifest.json", // gera manifest.json na raiz do outDir
-    outDir: "public/build", // pasta onde os assets vão
+    outDir: "public", // pasta onde os assets vão
     emptyOutDir: true,
     copyPublicDir: false,
   },
