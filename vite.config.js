@@ -1,28 +1,15 @@
 import { defineConfig } from "vite";
 import laravel from "laravel-vite-plugin";
-import vue from "@vitejs/plugin-vue";
 import tailwindcss from "@tailwindcss/vite";
-import path from "path";
+import vue from "@vitejs/plugin-vue";
 
 export default defineConfig({
-  base: "/",
-  plugins: [
-    laravel({
-      input: ["resources/js/app.js", "resources/css/app.css"],
-      refresh: true,
-    }),
-    vue(),
-    tailwindcss(),
-  ],
-  build: {
-    manifest: "manifest.json", // gera manifest.json na raiz do outDir
-    emptyOutDir: true,
-    copyPublicDir: false,
-    assetsDir: "", // <<< impede a duplicação /assets/assets
-  },
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./resources/js"),
-    },
-  },
+    plugins: [
+        laravel({
+            input: ["resources/css/app.css", "resources/js/app.js"],
+            refresh: true,
+        }),
+        vue(),
+        tailwindcss(),
+    ],
 });

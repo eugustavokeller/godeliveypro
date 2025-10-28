@@ -6,12 +6,12 @@ Sistema completo de otimização de entregas desenvolvido com **Laravel 10+**, *
 
 GoDeliveryPro é uma solução tecnológica avançada que ajuda empresas a otimizar suas operações de entregas. Com algoritmos inteligentes de roteamento, você pode:
 
-- **Calcular rotas otimizadas** considerando trânsito, distância e tempo
-- **Estimar tempo médio de entrega** baseado em dados históricos
-- **Monitorar kilometragem total** para controle de custos
-- **Otimizar trajetos automaticamente** para minimizar tempo e combustível
-- **Monitorar entregas em tempo real** com atualizações automáticas
-- **Gerar relatórios avançados** para análise de performance
+-   **Calcular rotas otimizadas** considerando trânsito, distância e tempo
+-   **Estimar tempo médio de entrega** baseado em dados históricos
+-   **Monitorar kilometragem total** para controle de custos
+-   **Otimizar trajetos automaticamente** para minimizar tempo e combustível
+-   **Monitorar entregas em tempo real** com atualizações automáticas
+-   **Gerar relatórios avançados** para análise de performance
 
 ## 📋 Funcionalidades
 
@@ -41,12 +41,12 @@ Análises detalhadas de performance com gráficos e métricas para tomada de dec
 
 ## 🚀 Requisitos
 
-- **PHP**: 8.1 ou superior
-- **Composer**: 2.x
-- **Node.js**: 18.x ou superior
-- **MySQL**: 8.0 ou superior
-- **Nginx**: 1.18+ (produção)
-- **OpenSSL** (para certificados SSL)
+-   **PHP**: 8.1 ou superior
+-   **Composer**: 2.x
+-   **Node.js**: 18.x ou superior
+-   **MySQL**: 8.0 ou superior
+-   **Nginx**: 1.18+ (produção)
+-   **OpenSSL** (para certificados SSL)
 
 ## 📦 Instalação Local
 
@@ -259,23 +259,23 @@ sudo systemctl restart php8.2-fpm
 
 ### Básico - R$ 29/mês
 
-- Até 100 entregas/mês
-- Cálculo de rotas básico
-- Suporte por email
+-   Até 100 entregas/mês
+-   Cálculo de rotas básico
+-   Suporte por email
 
 ### Profissional - R$ 79/mês ⭐ Mais Popular
 
-- Até 500 entregas/mês
-- Otimização avançada
-- Monitoramento em tempo real
-- Suporte prioritário
+-   Até 500 entregas/mês
+-   Otimização avançada
+-   Monitoramento em tempo real
+-   Suporte prioritário
 
 ### Enterprise - R$ 199/mês
 
-- Entregas ilimitadas
-- API personalizada
-- Relatórios customizados
-- Suporte dedicado
+-   Entregas ilimitadas
+-   API personalizada
+-   Relatórios customizados
+-   Suporte dedicado
 
 ## 🔒 Segurança e Privacidade
 
@@ -287,16 +287,16 @@ Sistema desenvolvido seguindo as melhores práticas de privacidade e proteção 
 
 Implementação de modal de cookies com opções de preferências para o usuário:
 
-- Cookies Essenciais
-- Cookies de Performance
-- Cookies de Funcionalidade
-- Cookies de Marketing
+-   Cookies Essenciais
+-   Cookies de Performance
+-   Cookies de Funcionalidade
+-   Cookies de Marketing
 
 ### Proteção de Dados
 
-- Dados criptografados em trânsito
-- Validação de entrada em todas as requisições
-- Proteção contra CSRF
+-   Dados criptografados em trânsito
+-   Validação de entrada em todas as requisições
+-   Proteção contra CSRF
 
 ## 🧪 Desenvolvimento
 
@@ -364,25 +364,25 @@ godeliverypro/
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **Backend**: Laravel 10+
-- **Frontend**: Vue 3 + Composition API
-- **Build Tool**: Vite
-- **Estilização**: Tailwind CSS 4.x
-- **Roteamento**: Vue Router 4
-- **HTTP Client**: Axios
-- **Servidor Web**: Nginx
-- **Runtime**: PHP 8.1+ (FPM)
-- **Containerização**: Docker & Docker Compose
+-   **Backend**: Laravel 10+
+-   **Frontend**: Vue 3 + Composition API
+-   **Build Tool**: Vite
+-   **Estilização**: Tailwind CSS 4.x
+-   **Roteamento**: Vue Router 4
+-   **HTTP Client**: Axios
+-   **Servidor Web**: Nginx
+-   **Runtime**: PHP 8.1+ (FPM)
+-   **Containerização**: Docker & Docker Compose
 
 ## 🎨 Componentes Principais
 
-- **LandingPage**: Página principal com apresentação do produto
-- **Header**: Cabeçalho com navegação e banner de cookies
-- **Footer**: Rodapé com links e redes sociais (Instagram, LinkedIn)
-- **CookieModal**: Modal de gerenciamento de preferências de cookies
-- **ConsentCapture**: Captura de consentimento do usuário
-- **Button**: Componente reutilizável de botão
-- **Card**: Componente de card para funcionalidades
+-   **LandingPage**: Página principal com apresentação do produto
+-   **Header**: Cabeçalho com navegação e banner de cookies
+-   **Footer**: Rodapé com links e redes sociais (Instagram, LinkedIn)
+-   **CookieModal**: Modal de gerenciamento de preferências de cookies
+-   **ConsentCapture**: Captura de consentimento do usuário
+-   **Button**: Componente reutilizável de botão
+-   **Card**: Componente de card para funcionalidades
 
 ## 📝 Licença
 
@@ -402,9 +402,9 @@ Contribuições são bem-vindas! Por favor:
 
 Para dúvidas ou suporte:
 
-- **Email**: contato@godeliverypro.com
-- **Telefone**: (11) 99999-9999
-- **Suporte**: suporte@godeliverypro.com
+-   **Email**: contato@godeliverypro.com
+-   **Telefone**: (11) 99999-9999
+-   **Suporte**: suporte@godeliverypro.com
 
 ---
 

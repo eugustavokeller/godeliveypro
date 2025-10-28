@@ -7,9 +7,9 @@ return [
     | Default Filesystem Disk
     |--------------------------------------------------------------------------
     |
-    | Aqui você pode especificar o disco padrão que deve ser usado pela
-    | estrutura de arquivos. O "local" disk, bem como várias opções
-    | de armazenamento em nuvem estão disponíveis para sua aplicação.
+    | Here you may specify the default filesystem disk that should be used
+    | by the framework. The "local" disk, as well as a variety of cloud
+    | based disks are available to your application for file storage.
     |
     */
 
@@ -20,11 +20,11 @@ return [
     | Filesystem Disks
     |--------------------------------------------------------------------------
     |
-    | Aqui você pode configurar quantos discos de "arquivos" desejar, e você
-    | pode até configurar múltiplos discos do mesmo driver. Exemplos de
-    | configuração de cada tipo de driver suportado são incluídos aqui.
+    | Below you may configure as many filesystem disks as necessary, and you
+    | may even configure multiple disks for the same driver. Examples for
+    | most supported storage drivers are configured here for reference.
     |
-    | Supported Drivers: "local", "ftp", "sftp", "s3"
+    | Supported drivers: "local", "ftp", "sftp", "s3"
     |
     */
 
@@ -32,16 +32,19 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => storage_path('app/private'),
+            'serve' => true,
             'throw' => false,
+            'report' => false,
         ],
 
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL') . '/storage',
+            'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
+            'report' => false,
         ],
 
         's3' => [
@@ -54,6 +57,7 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
+            'report' => false,
         ],
 
     ],
@@ -63,9 +67,9 @@ return [
     | Symbolic Links
     |--------------------------------------------------------------------------
     |
-    | Aqui você pode configurar os links simbólicos que serão criados quando
-    | o comando `storage:link` do Artisan for executado. As chaves do array
-    | são os caminhos relativos para os links e os valores são seus absolutos.
+    | Here you may configure the symbolic links that will be created when the
+    | `storage:link` Artisan command is executed. The array keys should be
+    | the locations of the links and the values should be their targets.
     |
     */
 
