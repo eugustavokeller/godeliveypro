@@ -14,8 +14,8 @@ echo "📦 Instalando dependências do backend..."
 composer install --no-dev --optimize-autoloader
 
 echo "🌐 Instalando dependências do frontend..."
-yarn cache clean --mirror
-yarn install --frozen-lockfile
+npm cache clean --force
+npm ci
 
 echo "🔧 Corrigindo permissões do esbuild..."
 chmod -R 755 node_modules/@esbuild || true
@@ -29,7 +29,7 @@ chmod +x node_modules/.bin/vite || true
 
 echo "⚡ Buildando frontend (Vite)..."
 rm -rf public/build
-yarn build
+npm run build
 
 echo "⚙️ Rodando migrações..."
 php artisan migrate --force --no-interaction
